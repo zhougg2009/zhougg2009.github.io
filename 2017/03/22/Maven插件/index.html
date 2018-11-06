@@ -1,0 +1,150 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta name="generator" content="Hexo 3.8.0"><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="记录学习的技能和遇到的问题"><title>Maven插件 | 风</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/normalize/8.0.0/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/1.0.0/pure-min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/1.0.0/grids-responsive-min.css"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">Maven插件</h1><a id="logo" href="/.">风</a><p class="description">纸上得来终觉浅，绝知此事要躬行。</p></div><div id="nav-menu"><a class="current" href="/."><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a><a href="/atom.xml"><i class="fa fa-rss"> 订阅</i></a></div></div><div class="pure-g" id="layout"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">Maven插件</h1><div class="post-meta">Mar 22, 2017<span> | </span><span class="category"><a href="/categories/Maven/">Maven</a></span></div><div class="post-content"><h4 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h4><p>Maven的核心只是定义了生命周期，所有任务的执行都是有插件完成，插件是以独立方式存在。maven会下载关联的插件执行任务（一个插件通常可以完成多个生命周期的任务）。</p>
+<h4 id="插件绑定"><a href="#插件绑定" class="headerlink" title="插件绑定"></a>插件绑定</h4><p>Ⅰ、Maven内置绑定了一些重要的生命周期的插件。</p>
+<p>以下是生命周期对于的默认插件：</p>
+<p>（1）clean</p>
+<table>
+<thead>
+<tr>
+<th>生命周期</th>
+<th>默认插件</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1、clean:clean</td>
+<td>maven-clean-plugin:clean</td>
+<td>删除项目输出目录</td>
+</tr>
+</tbody>
+</table>
+<p>（2）default（打不同包插件有所区别，以打jar包为例）</p>
+<table>
+<thead>
+<tr>
+<th>生命周期</th>
+<th>默认插件</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1、process-resources</td>
+<td>maven-resources-plugin:resources</td>
+<td>复制主资源文件到主输出目录</td>
+</tr>
+<tr>
+<td>2、compile</td>
+<td>maven-compile-plugin:compile</td>
+<td>编译主代码到主输出目录</td>
+</tr>
+<tr>
+<td>3、process-test-resources</td>
+<td>maven-resources-plugin:testResources</td>
+<td>复制测试资源文件到测试输出目录</td>
+</tr>
+<tr>
+<td>4、test-compile</td>
+<td>maven-compile-plugin:testCompile</td>
+<td>编译测试代码到测试输出目录</td>
+</tr>
+<tr>
+<td>5、test</td>
+<td>maven-surefire-plugin:test</td>
+<td>执行测试</td>
+</tr>
+<tr>
+<td>6、package</td>
+<td>maven-jar-plugin:jar</td>
+<td>打jar包</td>
+</tr>
+<tr>
+<td>7、install</td>
+<td>maven-install-plugin:install</td>
+<td>构建jar放到本地仓库</td>
+</tr>
+<tr>
+<td>8、deploy</td>
+<td>maven-deploy-plugin:deploy</td>
+<td>构建jar放到远程仓库</td>
+</tr>
+</tbody>
+</table>
+<p>（3）site</p>
+<table>
+<thead>
+<tr>
+<th>生命周期</th>
+<th>默认插件</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1、site:site</td>
+<td>maven-site-plugin:site</td>
+<td>生成项目站点</td>
+</tr>
+<tr>
+<td>2、site:site-deploy</td>
+<td>maven-site-plugin:deploy</td>
+<td>将项目站点部署到远程服务器上</td>
+</tr>
+</tbody>
+</table>
+<p>Ⅱ、除了默认的插件绑定，其他生命周期阶段没有绑定任何插件，可自行绑定</p>
+<p>以下为打源码jar举例</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&lt;build&gt;</span><br><span class="line">	&lt;plugins&gt;</span><br><span class="line">		&lt;plugin&gt;</span><br><span class="line">			&lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;</span><br><span class="line">			&lt;artifactId&gt;maven-source-plugin&lt;/artifactId&gt;</span><br><span class="line">			&lt;version&gt;2.1.1&lt;/version&gt;</span><br><span class="line">			&lt;executions&gt;</span><br><span class="line">				&lt;execution&gt;</span><br><span class="line">					&lt;id&gt;attach-sources&lt;/id&gt;</span><br><span class="line">					&lt;phase&gt;verify&lt;/phase&gt;</span><br><span class="line">					&lt;goals&gt;</span><br><span class="line">						&lt;goal&gt;jar-no-fork&lt;/goal&gt;</span><br><span class="line">					&lt;/goals&gt;</span><br><span class="line">				&lt;/execution&gt;</span><br><span class="line">			&lt;/executions&gt;</span><br><span class="line">		&lt;/plugin&gt;</span><br><span class="line">	&lt;/plugins&gt;</span><br><span class="line">&lt;/build&gt;</span><br></pre></td></tr></table></figure>
+<p>每个execution是一个任务，先配置了一个id为attach-sources的任务，通过phase，将生命周期的verify阶段绑定了插件的jar-no-fork目标。这个插件会打源码包，并以 -sources.jar 结尾。</p>
+<p>注：有时候插件目标里已经绑定了生命周期阶段，这个时候phase也可以不写。当多个插件目标绑定同一个生命周期阶段时，按照插件声明的顺序执行。</p>
+<p>Ⅲ、插件配置好后，还可以通过命令行配置插件目标</p>
+<p>-D 是java自带的，设置一个java系统属性。以下为运行default:install时，跳过test的生命周期，即不执行test：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mvn install -Dmaven.test.skip=true</span><br></pre></td></tr></table></figure>
+<p>命令行使用插件：如 mvn eclipse:eclipse</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mvn [options] [&lt;goal(s)&gt;] [&lt;phase(s)&gt;]</span><br></pre></td></tr></table></figure>
+<p>Ⅳ、插件的配置</p>
+<p>（1）全局配置：指定以某个版本编译</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;build&gt;</span><br><span class="line">	&lt;plugins&gt;</span><br><span class="line">		&lt;plugin&gt;</span><br><span class="line">			&lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;</span><br><span class="line">			&lt;artifactId&gt;maven-compiler-plugin&lt;/artifactId&gt;</span><br><span class="line">			&lt;version&gt;2.1&lt;/version&gt;</span><br><span class="line">			&lt;configuration&gt;</span><br><span class="line">				&lt;source&gt;1.7&lt;/source&gt;</span><br><span class="line">				&lt;target&gt;1.7&lt;/target&gt;</span><br><span class="line">			&lt;/configuration&gt;</span><br><span class="line">		&lt;/plugin&gt;</span><br><span class="line">	&lt;/plugins&gt;</span><br><span class="line">&lt;/build&gt;</span><br></pre></td></tr></table></figure>
+<p>（2）为插件绑定特定自定义任务。maven-antrun-plugin,有个run目标，可以调用ant任务,在生命周期verify时，输出一句话：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">&lt;build&gt;</span><br><span class="line">	&lt;plugins&gt;</span><br><span class="line">		&lt;plugin&gt;</span><br><span class="line">			&lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;</span><br><span class="line">			&lt;artifactId&gt;maven-antrun-plugin&lt;/artifactId&gt;</span><br><span class="line">			&lt;version&gt;2.3&lt;/version&gt;</span><br><span class="line">			&lt;executions&gt;</span><br><span class="line">				&lt;execution&gt;</span><br><span class="line">					&lt;id&gt;xxxxxx&lt;/id&gt;</span><br><span class="line">					&lt;phase&gt;verify&lt;/phase&gt;</span><br><span class="line">					&lt;goals&gt;</span><br><span class="line">						&lt;goal&gt;run&lt;/goal&gt;</span><br><span class="line">					&lt;/goals&gt;</span><br><span class="line">					&lt;configuration&gt;</span><br><span class="line">						&lt;tasks&gt;</span><br><span class="line">							&lt;echo&gt;this is output&lt;/echo&gt;</span><br><span class="line">						&lt;/tasks&gt;</span><br><span class="line">					&lt;/configuration&gt;</span><br><span class="line">				&lt;/execution&gt;</span><br><span class="line">			&lt;/executions&gt;</span><br><span class="line">		&lt;/plugin&gt;</span><br><span class="line">	&lt;/plugins&gt;</span><br><span class="line">&lt;/build&gt;</span><br></pre></td></tr></table></figure>
+<p>Ⅴ、插件仓库</p>
+<p>默认插件groupId：org.apache.maven.plugins(默认时可以不写groupId)</p>
+<p>官方插件库：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;pluginRepositories&gt;    </span><br><span class="line">    &lt;pluginRepository&gt;    </span><br><span class="line">        &lt;id&gt;central&lt;/id&gt;    </span><br><span class="line">        &lt;name&gt;Maven plugin&lt;/name&gt;    </span><br><span class="line">        &lt;url&gt;htpp://repo1.maven.org/maven2&lt;/url&gt;    </span><br><span class="line">        &lt;layout&gt;default&lt;/layout&gt;    </span><br><span class="line">        &lt;snapshots&gt;    </span><br><span class="line">        	&lt;enabled&gt;true&lt;/enabled&gt;    </span><br><span class="line">        &lt;/snapshots&gt;    </span><br><span class="line">        &lt;releases&gt;    </span><br><span class="line">        	&lt;updatePolicy&gt;never&lt;/updatePolicy&gt;  </span><br><span class="line">        &lt;/releases&gt;    </span><br><span class="line">    &lt;/pluginRepository&gt;    </span><br><span class="line">&lt;/pluginRepositories&gt;</span><br></pre></td></tr></table></figure>
+<h4 id="测试插件-maven-surefire-plugin"><a href="#测试插件-maven-surefire-plugin" class="headerlink" title="测试插件 maven-surefire-plugin"></a>测试插件 maven-surefire-plugin</h4><p>（1）JUnit</p>
+<p>Ⅰ、默认test的目标是测试源码路径（src/test/java/）下所有符合以下命名的文件：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1、**/Test*.java</span><br><span class="line">2、**/*Test.java</span><br><span class="line">3、**/*TestCase.java</span><br></pre></td></tr></table></figure>
+<p>动态指定运行的测试，几种方式，My1Test等为待测试的类</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mvn test -Dtest=My*Test  (*通配符)</span><br><span class="line">mvn test -Dtest=My1Test,My2Test,You*Test</span><br></pre></td></tr></table></figure>
+<p>以下命令是的即使没有测试也不报错</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mvn test -Dtest -DfailIfNoTest=false</span><br></pre></td></tr></table></figure>
+<p>Ⅱ、除了默认的测试类命名规则，还可以配置如下(包含不在约定命名和去除某些测试)：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;plugin&gt;</span><br><span class="line">	&lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;</span><br><span class="line">	&lt;artifactId&gt;maven-surefire-plugin&lt;/artifactId&gt;</span><br><span class="line">	&lt;version&gt;2.5&lt;/version&gt;</span><br><span class="line">	&lt;configuration&gt;</span><br><span class="line">		&lt;includes&gt;</span><br><span class="line">			&lt;include&gt;**/*Teee.java&lt;/include&gt;</span><br><span class="line">		&lt;/includes&gt;</span><br><span class="line">		&lt;excludes&gt;</span><br><span class="line">			&lt;exclude&gt;**/My*Test.java&lt;/exclude&gt;</span><br><span class="line">		&lt;/excludes&gt;</span><br><span class="line">	&lt;/configuration&gt;</span><br><span class="line">&lt;/plugin&gt;</span><br></pre></td></tr></table></figure>
+<p>Ⅲ、跳过测试运行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mvn package -DskipTests</span><br></pre></td></tr></table></figure>
+<p>也可以在pom中使用 maven-surefire-plugin 插件来提供这个属性</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;plugin&gt;</span><br><span class="line">	&lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;</span><br><span class="line">	&lt;artifactId&gt;maven-surefire-plugin&lt;/artifactId&gt;</span><br><span class="line">	&lt;version&gt;2.5&lt;/version&gt;</span><br><span class="line">	&lt;configuration&gt;</span><br><span class="line">		&lt;skipTests&gt;true&lt;/skipTests&gt;</span><br><span class="line">	&lt;/configuration&gt;</span><br><span class="line">&lt;/plugin&gt;</span><br></pre></td></tr></table></figure>
+<p>Ⅳ、跳过测试编译与运行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">maven package -Dmaven.test.skip=true</span><br></pre></td></tr></table></figure>
+<p>也可以在pom中使用 maven-compiler-plugin，maven-surefire-plugin 插件来提供这个属性</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;plugin&gt;</span><br><span class="line">	&lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;</span><br><span class="line">	&lt;artifactId&gt;maven-compiler-plugin&lt;/artifactId&gt;</span><br><span class="line">	&lt;version&gt;2.1&lt;/version&gt;</span><br><span class="line">	&lt;configuration&gt;</span><br><span class="line">		&lt;skip&gt;true&lt;/skip&gt;</span><br><span class="line">	&lt;/configuration&gt;</span><br><span class="line">&lt;/plugin&gt;</span><br><span class="line">&lt;plugin&gt;</span><br><span class="line">	&lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;</span><br><span class="line">	&lt;artifactId&gt;maven-surefire-plugin&lt;/artifactId&gt;</span><br><span class="line">	&lt;version&gt;2.5&lt;/version&gt;</span><br><span class="line">	&lt;configuration&gt;</span><br><span class="line">		&lt;skipTests&gt;true&lt;/skipTests&gt;</span><br><span class="line">	&lt;/configuration&gt;</span><br><span class="line">&lt;/plugin&gt;</span><br></pre></td></tr></table></figure>
+<p>Ⅴ、测试报告</p>
+<p>在 target/surefire-reports 目录下生成2种格式错误报告：</p>
+<p>1、简单文本格式</p>
+<p>2、junit兼容的xml格式</p>
+<p>Ⅵ、测试覆盖率报告，cobertura-maven-plugin</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mvn cobertura:cobertura</span><br></pre></td></tr></table></figure>
+<p>在 target/site/cobertura/ 目录下会出现 index.html 文件显示测试覆盖率</p>
+<p>（2）TestNG</p>
+<p>Ⅰ、使用名为 testng.xml 配置需要测试的类</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;suite name=&quot;suite1&quot; verbose=&quot;1&quot;&gt;</span><br><span class="line">	&lt;test name=&quot;test1&quot;&gt;</span><br><span class="line">		&lt;classes&gt;</span><br><span class="line">			&lt;class name=&quot;com.xxx.web.service.My1Test&quot;/&gt;</span><br><span class="line">		&lt;/classes&gt;</span><br><span class="line">	&lt;/test&gt;</span><br><span class="line">&lt;/suite&gt;</span><br></pre></td></tr></table></figure>
+<p>使用 maven-surefire-plugin 配置 pom</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;plugin&gt;</span><br><span class="line">	&lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;</span><br><span class="line">	&lt;artifactId&gt;maven-surefire-plugin&lt;/artifactId&gt;</span><br><span class="line">	&lt;version&gt;2.5&lt;/version&gt;</span><br><span class="line">	&lt;configuration&gt;</span><br><span class="line">		&lt;suiteXmlFiles&gt;</span><br><span class="line">			&lt;suiteXmlFile&gt;testng.xml&lt;/suiteXmlFile&gt;</span><br><span class="line">		&lt;/suiteXmlFiles&gt;</span><br><span class="line">	&lt;/configuration&gt;</span><br><span class="line">&lt;/plugin&gt;</span><br></pre></td></tr></table></figure>
+<p>Ⅱ、TestNG可以使用测试组，在代码里：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@Test(groups = &#123;&quot;myTestGroup&quot;, &quot;mainTestGroup&quot;&#125;)</span><br></pre></td></tr></table></figure>
+<p>使用 maven-surefire-plugin 配置 pom，归类测试</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;plugin&gt;</span><br><span class="line">	&lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;</span><br><span class="line">	&lt;artifactId&gt;maven-surefire-plugin&lt;/artifactId&gt;</span><br><span class="line">	&lt;version&gt;2.5&lt;/version&gt;</span><br><span class="line">	&lt;configuration&gt;</span><br><span class="line">		&lt;groups&gt;myTestGroup,mainTestGroup&lt;/groups&gt;</span><br><span class="line">	&lt;/configuration&gt;</span><br><span class="line">&lt;/plugin&gt;</span><br></pre></td></tr></table></figure>
+<p>Ⅲ、打测试文件的包以供其他项目使用 maven-jar-plugin，在package生命周期</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;plugin&gt;</span><br><span class="line">	&lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;</span><br><span class="line">	&lt;artifactId&gt;maven-jar-plugin&lt;/artifactId&gt;</span><br><span class="line">	&lt;version&gt;2.2&lt;/version&gt;</span><br><span class="line">	&lt;executions&gt;</span><br><span class="line">		&lt;execution&gt;</span><br><span class="line">			&lt;goals&gt;</span><br><span class="line">				&lt;goal&gt;test-jar&lt;/goal&gt;</span><br><span class="line">			&lt;/goals&gt;</span><br><span class="line">		&lt;/execution&gt;</span><br><span class="line">	&lt;/executions&gt;</span><br><span class="line">&lt;/plugin&gt;</span><br></pre></td></tr></table></figure>
+<p>其他项目引用时 dependency中添加</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;type&gt;test-jar&lt;/type&gt;</span><br><span class="line">&lt;scope&gt;test&lt;/scope&gt;</span><br></pre></td></tr></table></figure></div><div class="tags"></div><div class="post-nav"><a class="pre" href="/2017/03/22/Maven聚合/">Maven聚合</a><a class="next" href="/2017/03/22/Maven生命周期/">Maven生命周期</a></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><form class="search-form" action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank"><input type="text" name="q" maxlength="20" placeholder="Search"><input type="hidden" name="sitesearch" value="http://yoursite.com"></form></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Maven/">Maven</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/SpringBoot/">SpringBoot</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/SpringCloud/">SpringCloud</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/SpringMvc/">SpringMvc</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/docker/">docker</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/设计模式/">设计模式</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/设计模式/创建型模式/">创建型模式</a></li></ul></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"><a href="/tags/tomcat/" style="font-size: 15px;">tomcat</a> <a href="/tags/mysql/" style="font-size: 15px;">mysql</a> <a href="/tags/环境配置/" style="font-size: 15px;">环境配置</a> <a href="/tags/demo/" style="font-size: 15px;">demo</a> <a href="/tags/activemq/" style="font-size: 15px;">activemq</a> <a href="/tags/redis/" style="font-size: 15px;">redis</a> <a href="/tags/ELK/" style="font-size: 15px;">ELK</a> <a href="/tags/git/" style="font-size: 15px;">git</a> <a href="/tags/linux/" style="font-size: 15px;">linux</a> <a href="/tags/mongodb/" style="font-size: 15px;">mongodb</a> <a href="/tags/session/" style="font-size: 15px;">session</a> <a href="/tags/基础/" style="font-size: 15px;">基础</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最近文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/06/21/springboot动态数据源/">springboot动态数据源</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/13/docker安装redis/">docker安装redis</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/13/docker安装activemq/">docker安装activemq</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/12/docker安装tomcat/">docker安装tomcat</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/12/Docker安装mysql/">Docker安装mysql</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/12/Docker简介/">Docker简介</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/30/设计模式总结/">设计模式总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/10/原理基础题目/">原理基础题目</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/02/单例模式/">单例模式</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/01/六大原则/">六大原则</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> 友情链接</i></div><ul></ul><a href="http://www.example1.com/" title="site-name1" target="_blank">site-name1</a><ul></ul><a href="http://www.example2.com/" title="site-name2" target="_blank">site-name2</a><ul></ul><a href="http://www.example3.com/" title="site-name3" target="_blank">site-name3</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2018 <a href="/." rel="nofollow">风.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a class="show" id="rocket" href="#top"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.bootcss.com/fancybox/3.3.5/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/fancybox/3.3.5/jquery.fancybox.min.css"><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>

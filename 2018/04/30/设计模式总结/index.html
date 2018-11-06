@@ -1,0 +1,45 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta name="generator" content="Hexo 3.8.0"><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="记录学习的技能和遇到的问题"><title>设计模式总结 | 风</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/normalize/8.0.0/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/1.0.0/pure-min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/1.0.0/grids-responsive-min.css"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">设计模式总结</h1><a id="logo" href="/.">风</a><p class="description">纸上得来终觉浅，绝知此事要躬行。</p></div><div id="nav-menu"><a class="current" href="/."><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a><a href="/atom.xml"><i class="fa fa-rss"> 订阅</i></a></div></div><div class="pure-g" id="layout"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">设计模式总结</h1><div class="post-meta">Apr 30, 2018<span> | </span><span class="category"><a href="/categories/设计模式/">设计模式</a></span></div><div class="post-content"><ol>
+<li><p><strong>创建型模式–&gt;</strong>对象怎么来</p>
+</li>
+<li><p><strong>结构型模式–&gt;</strong>对象和谁有关</p>
+</li>
+<li><p><strong>行为型模式–&gt;</strong>对象与对象在干嘛</p>
+</li>
+<li><p><strong>J2EE 模式–&gt;</strong>对象合起来要干嘛   </p>
+</li>
+</ol>
+<p>java是面向对象的语言,所以要搞好对象,模式（套路）就是用来更加好的搞对象滴。</p>
+<table>
+<thead>
+<tr>
+<th>序号</th>
+<th>模式 &amp; 描述</th>
+<th>包括</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>创建型模式</strong> 这些设计模式提供了一种在创建对象的同时隐藏创建逻辑的方式，而不是使用 new 运算符直接实例化对象。这使得程序在判断针对某个给定实例需要创建哪些对象时更加灵活。</td>
+<td>工厂模式（Factory Pattern）抽象工厂模式（Abstract Factory Pattern）单例模式（Singleton Pattern）建造者模式（Builder Pattern）原型模式（Prototype Pattern）</td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>结构型模式</strong> 这些设计模式关注类和对象的组合。继承的概念被用来组合接口和定义组合对象获得新功能的方式。</td>
+<td>适配器模式（Adapter Pattern）桥接模式（Bridge Pattern）过滤器模式（Filter、Criteria Pattern）组合模式（Composite Pattern）装饰器模式（Decorator Pattern）外观模式（Facade Pattern）享元模式（Flyweight Pattern）代理模式（Proxy Pattern）</td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>行为型模式</strong> 这些设计模式特别关注对象之间的通信。</td>
+<td>责任链模式（Chain of Responsibility Pattern）命令模式（Command Pattern）解释器模式（Interpreter Pattern）迭代器模式（Iterator Pattern）中介者模式（Mediator Pattern）备忘录模式（Memento Pattern）观察者模式（Observer Pattern）状态模式（State Pattern）空对象模式（Null Object Pattern）策略模式（Strategy Pattern）模板模式（Template Pattern）访问者模式（Visitor Pattern）</td>
+</tr>
+<tr>
+<td>4</td>
+<td><strong>J2EE 模式</strong> 这些设计模式特别关注表示层。这些模式是由 Sun Java Center 鉴定的。</td>
+<td>MVC 模式（MVC Pattern）业务代表模式（Business Delegate Pattern）组合实体模式（Composite Entity Pattern）数据访问对象模式（Data Access Object Pattern）前端控制器模式（Front Controller Pattern）拦截过滤器模式（Intercepting Filter Pattern）服务定位器模式（Service Locator Pattern）传输对象模式（Transfer Object Pattern）</td>
+</tr>
+</tbody>
+</table>
+<p>下面用一个图片来整体描述一下设计模式之间的关系：</p>
+<p><img src="设计模式总结\设计模式总结.jpg" alt=""></p>
+</div><div class="tags"></div><div class="post-nav"><a class="pre" href="/2018/06/12/Docker简介/">Docker简介</a><a class="next" href="/2018/04/10/原理基础题目/">原理基础题目</a></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><form class="search-form" action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank"><input type="text" name="q" maxlength="20" placeholder="Search"><input type="hidden" name="sitesearch" value="http://yoursite.com"></form></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Maven/">Maven</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/SpringBoot/">SpringBoot</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/SpringCloud/">SpringCloud</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/SpringMvc/">SpringMvc</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/docker/">docker</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/设计模式/">设计模式</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/设计模式/创建型模式/">创建型模式</a></li></ul></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"><a href="/tags/tomcat/" style="font-size: 15px;">tomcat</a> <a href="/tags/mysql/" style="font-size: 15px;">mysql</a> <a href="/tags/环境配置/" style="font-size: 15px;">环境配置</a> <a href="/tags/demo/" style="font-size: 15px;">demo</a> <a href="/tags/activemq/" style="font-size: 15px;">activemq</a> <a href="/tags/redis/" style="font-size: 15px;">redis</a> <a href="/tags/ELK/" style="font-size: 15px;">ELK</a> <a href="/tags/git/" style="font-size: 15px;">git</a> <a href="/tags/linux/" style="font-size: 15px;">linux</a> <a href="/tags/mongodb/" style="font-size: 15px;">mongodb</a> <a href="/tags/session/" style="font-size: 15px;">session</a> <a href="/tags/基础/" style="font-size: 15px;">基础</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最近文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/06/21/springboot动态数据源/">springboot动态数据源</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/13/docker安装redis/">docker安装redis</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/13/docker安装activemq/">docker安装activemq</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/12/docker安装tomcat/">docker安装tomcat</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/12/Docker安装mysql/">Docker安装mysql</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/12/Docker简介/">Docker简介</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/30/设计模式总结/">设计模式总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/10/原理基础题目/">原理基础题目</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/02/单例模式/">单例模式</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/01/六大原则/">六大原则</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> 友情链接</i></div><ul></ul><a href="http://www.example1.com/" title="site-name1" target="_blank">site-name1</a><ul></ul><a href="http://www.example2.com/" title="site-name2" target="_blank">site-name2</a><ul></ul><a href="http://www.example3.com/" title="site-name3" target="_blank">site-name3</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2018 <a href="/." rel="nofollow">风.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a class="show" id="rocket" href="#top"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.bootcss.com/fancybox/3.3.5/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/fancybox/3.3.5/jquery.fancybox.min.css"><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>
